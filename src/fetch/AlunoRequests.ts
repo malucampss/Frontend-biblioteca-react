@@ -51,6 +51,29 @@ class AlunoRequests {
             return null;
         }
     }
+
+    async enviarFormularioAluno(formAluno: string): Promise<boolean> {
+        try{
+            const respostaAPI = await fetch(`${this.serverURL}${this.routeCadastraAluno}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: formAluno
+            });
+
+            if(!respostaAPI.ok) {
+                throw new Error('Erro ao fazer requisição com o servidor.');
+                
+            }
+
+            return true;
+
+        } catch (error) {
+            console.error(`Erro ao enviar formulário. ${error}`);
+            return false;
+        }
+    }
 }
 
 // Exporta a classe já instanciando um objeto da mesma
