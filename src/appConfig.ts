@@ -11,12 +11,14 @@ export const APP_ROUTES = {
     ROUTE_HOME: '/',
     ROUTE_LOGIN: '/login',
 
+
     ROUTE_LISTAGEM_ALUNOS: '/alunos',
     ROUTE_LISTAGEM_EMPRESTIMOS: '/emprestimos',
     ROUTE_LISTAGEM_LIVROS: '/livros',
 
     ROUTE_CADASTRO_ALUNO: '/cadastro/aluno',
     ROUTE_CADASTRO_LIVRO: '/cadastro/livro',
+    ROUTE_CADASTRO_EMPRESTIMO: '/cadastro/emprestimo'
 }
 
 /**
@@ -27,7 +29,7 @@ export const APP_ROUTES = {
  */
 export const SERVER_CFG = {
     // endereço do servidor da API
-    SERVER_URL: `${API_SERVER_URL}:${API_SERVER_PORT}`,
+    SERVER_URL: `${API_SERVER_URL}`,
     
     // endpoints de aluno
     ENDPOINT_LISTAR_ALUNOS: '/lista/alunos',
@@ -49,4 +51,10 @@ export const SERVER_CFG = {
 
     // endpoint de login
     ENDPOINT_AUTH_LOGIN: '/login'
+}
+
+export const STATUS_EMPRESTIMO = {
+    STATUS_EM_ANDAMENTO: 'Em andamento',
+    STATUS_CONCLUIDO: 'Concluido',
+    STATUS_ATRASADO:'Atrasado'
 }
