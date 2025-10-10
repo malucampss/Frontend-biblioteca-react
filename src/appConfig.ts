@@ -18,7 +18,11 @@ export const APP_ROUTES = {
 
     ROUTE_CADASTRO_ALUNO: '/cadastro/aluno',
     ROUTE_CADASTRO_LIVRO: '/cadastro/livro',
-    ROUTE_CADASTRO_EMPRESTIMO: '/cadastro/emprestimo'
+    ROUTE_CADASTRO_EMPRESTIMO: '/cadastro/emprestimo',
+
+    ROUTE_ATUALIZACAO_ALUNO: '/atualizar/aluno',
+    ROUTE_ATUALIZACAO_LIVRO: '/atualizar/livro',
+    ROUTE_ATUALIZACAO_EMPRESTIMO:'/atualizar/emprestimo'
 }
 
 /**
@@ -33,6 +37,7 @@ export const SERVER_CFG = {
     
     // endpoints de aluno
     ENDPOINT_LISTAR_ALUNOS: '/lista/alunos',
+    ENDPOINT_LISTAR_ALUNO: '/lista/aluno',
     ENDPOINT_CADASTRAR_ALUNO: '/novo/aluno',
     ENDPOINT_ATUALIZAR_ALUNO: '/atualiza/aluno',
     ENDPOINT_REMOVER_ALUNO: '/remove/aluno',

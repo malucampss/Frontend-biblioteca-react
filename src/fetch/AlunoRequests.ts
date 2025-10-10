@@ -9,6 +9,7 @@ class AlunoRequests {
 
     private serverURL: string;          // Variável para o endereço do servidor
     private routeListaAlunos: string;   // Variável para a rota de listagem de alunos
+    private routeListaAluno: string;
     private routeCadastraAluno: string; // Variável para a rota de cadastro de aluno
     private routeAtualizaAluno: string; // Variável para a rota de atualiação de aluno
     private routeRemoveAluno: string;   // Variável para a rota de remoção do aluno
@@ -20,6 +21,7 @@ class AlunoRequests {
     constructor() {
         this.serverURL = SERVER_CFG.SERVER_URL;     // Endereço do servidor web
         this.routeListaAlunos = SERVER_CFG.ENDPOINT_LISTAR_ALUNOS;    // Rota configurada na API
+        this.routeListaAluno = SERVER_CFG.ENDPOINT_LISTAR_ALUNO;
         this.routeCadastraAluno = SERVER_CFG.ENDPOINT_CADASTRAR_ALUNO;    // Rota configurada na API
         this.routeAtualizaAluno = SERVER_CFG.ENDPOINT_ATUALIZAR_ALUNO; // Rota configurada na API
         this.routeRemoveAluno = SERVER_CFG.ENDPOINT_REMOVER_ALUNO;    // Rota configurada na API
@@ -56,6 +58,27 @@ class AlunoRequests {
         }
     }
 
+    async consultaAluno(idAluno: number): Promise<AlunoDTO | null> {
+        const token = localStorage.getItem('token');
+        try {
+            const respostaAPI = await fetch(`${this.serverURL}${this.routeListaAluno}?idAluno=${idAluno}`, {
+                headers:{
+                    'x-access-token': `${token}`
+                }
+            });
+
+            if(respostaAPI.ok) {
+                const aluno: AlunoDTO = await respostaAPI.json();
+                return aluno;
+            }else{
+                throw new Error(`Não foi possível recuperar o aluno.`);
+            }
+        } catch (error) {
+            console.error(`Erro ao fazer consulta do aluno.${error}`);
+            return null;
+        }
+    }
+
     /**
      * Envia os dados do formulário aluno para a API
      * @param formAluno Objeto com os valores do formulário
@@ -83,6 +106,52 @@ class AlunoRequests {
             return false;
         }
     }
+
+    async removerAluno(idAluno: number): Promise<boolean> {
+        const token = localStorage.getItem('token');
+        try {
+            const respostaAPI = await fetch(`${this.serverURL}${this.routeRemoveAluno}?idAluno=${idAluno}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json',
+                    'x-access-token': `${token}`
+                }
+            });
+            if(!respostaAPI.ok) {
+                throw new Error('Erro ao fazer a requisição à API')
+            }
+            return true;
+        } catch (error) {
+            console.error(`Erro ao fazer solicitação. ${error}`);
+            return false;
+        }
+    }
+
+    async enviarFormularioAtualizacaoAluno (formAluno: AlunoDTO): Promise<boolean>{
+        const token = localStorage.getItem('token');
+        try {
+            const respostaAPI = await fetch(`${this.serverURL}${this.routeAtualizaAluno} ?idAluno=${formAluno.idAluno}`,{
+                method: `PUT`,
+                headers: {
+                    'Content-type': 'application/json',
+                    'x-access-token': `${token}`
+                },
+                body: JSON.stringify(formAluno)
+            });
+            
+            if(!respostaAPI.ok) {
+                throw new Error('Erro ao fazer requisição com o servidor');
+            }
+            return true;
+        } catch (error) {
+            console.error(`Erro ao enviar requisição. ${error}`);
+            return false;
+            
+        }
+    }
+
+
+
 }
 
 // Exporta a classe já instanciando um objeto da mesma

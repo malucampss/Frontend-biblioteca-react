@@ -45,6 +45,12 @@
     background-color: var(--input-bg);
 }
 
+.input-email-login::placeholder,
+.input-password-login::placeholder{
+    color: black;
+}
+
+
 .input-button-login {
     width: 30%;
     height: 7vh;

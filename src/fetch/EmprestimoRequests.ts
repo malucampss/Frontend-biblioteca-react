@@ -84,6 +84,53 @@ class EmprestimoRequests {
             return false;
         }
     }
+
+    async removerEmprestimo(idEmprstimo: number): Promise<boolean> {
+        const token = localStorage.getItem('token');
+        try {
+            const respostaAPI = await fetch(`${this.serverURL}${this.routeRemoveEmprestimo}?idEmprestimo=${idEmprstimo}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json',
+                    'x-access-token': `${token}`
+                }
+            });
+            if(!respostaAPI.ok) {
+                throw new Error('Erro ao fazer a requisição à API')
+            }
+            return true;
+        } catch (error) {
+            console.error(`Erro ao fazer solicitação. ${error}`);
+            return false;
+        }
+    }
+
+
+    async enviarFormularioAtualizacaoEmprestimo (formEmprestimo: EmprestimoDTO): Promise<boolean>{
+        const token = localStorage.getItem('token');
+        try {
+            const respostaAPI = await fetch(`${this.serverURL}${this.routeAtualizaEmprestimo} ?idEmprestimo=${formEmprestimo.idEmprestimo}`,{
+                method: `PUT`,
+                headers: {
+                    'Content-type': 'application/json',
+                    'x-access-token': `${token}`
+                },
+                body: JSON.stringify(formEmprestimo)
+            });
+            
+            if(!respostaAPI.ok) {
+                throw new Error('Erro ao fazer requisição com o servidor');
+            }
+            return true;
+        } catch (error) {
+            console.error(`Erro ao enviar requisição. ${error}`);
+            return false;
+            
+        }
+    }
+
+
+
 }
 
 // Exporta a classe já instanciada, pronta para ser utilizada em outras partes do sistema
